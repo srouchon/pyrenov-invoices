@@ -1,0 +1,58 @@
+<div class="row d-flex">
+  <h1 class="mr-auto">Liste des Devis</h1>
+</div>
+<% if @quotes.blank? || @company.quotes.blank? %>
+  <div class="row d-flex">
+    <p>Pas de devis</p>
+  </div>
+<% else %>
+  <div class="row d-flex">
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Référence</th>
+          <th>Client</th>
+          <th>Description du devis</th>
+          <th>Acompte</th>
+          <th>Prix HT</th>
+          <th>Prix TTC</th>
+          <th>Etat</th>
+          <th>Changer l'état?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @company.quotes.each do |quote| %>
+          <tr>
+            <td>
+              <%= link_to company_customer_quote_path(@company, quote.customer.id, quote.id) do %>
+                <%= quote.ref_quote %>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to company_customer_path(@company, quote.customer.id) do %>
+                <%= quote.customer.name %>
+              <% end %>
+            </td>
+            <td><%= quote.description %></td>
+            <td class='text-right'><%= quote.deposit %> €</td>
+            <td class='text-right'><%= quote.price_duty_free %> €</td>
+            <td class='text-right'><%= quote.price_all_taxes %> €</td>
+            <td class='text-right'><%= quote.quote_status %></td>
+            <td>
+                <%= form_for([@company, quote.customer, quote]) do |f| %>
+                  <%= f.select(:quote_status, Quote.quote_statuses.keys.map {|status| status}) %>
+                  <%= f.hidden_field :ref_quote, value: quote.ref_quote %>
+                  <%= f.hidden_field :description, value: quote.description %>
+                  <%= f.hidden_field :date, value: quote.date %>
+                  <%= submit_tag 'OK', class: 'text-primary'%>
+                <% end %>
+              </td>
+            <td>
+              <%= link_to 'Voir détails', company_customer_quote_path(@company, quote.customer.id, quote.id), class: 'btn btn-secondary' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

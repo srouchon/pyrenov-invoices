@@ -1,0 +1,21 @@
+<div>
+  <div class="row">
+    <h1><%= @customer.persisted? ? "Modifier les informations du client" : "Créer un nouveau client" %></h1>
+  </div>
+  <div>
+    <%= simple_form_for([@company, @customer]) do |f| %>
+      <%= f.input :name, label: 'Nom ou Dénomination sociale:' %>
+      <%= f.input :ref_client, label: 'Référence Client:' %>
+      <%= f.input :address, label: 'Adresse:' %>
+      <%= f.input :postcode, label: 'Code postal:' %>
+      <%= f.input :city, label: 'Ville:' %>
+      <%= f.input :phone_1, label: 'Téléphone 1:' %>
+      <%= f.input :phone_2, label: 'Téléphone 2' %>
+      <%= f.input :email_1, label: 'Email 1:' %>
+      <%= f.input :email_2, label: 'Email 2:' %>
+      <%= f.input :siret, label: "SIRET (s'il s'agit d'une entreprise):" %>
+      <%= link_to 'Annuler', company_customers_path(@company), class: 'btn btn-primary' %>
+      <%= f.submit @customer.persisted? ? "Modifier ce client" : "Créer ce client", class: 'btn btn-secondary' %>
+    <% end %>
+  </div>
+</div>

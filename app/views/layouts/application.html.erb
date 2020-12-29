@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Easy Invoicing</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+      <%= render 'shared/navbar' %>
+      <div class="container p-5 page-content" id="content">
+        <%= render 'shared/toggle_btn' %>
+        <%= yield %>
+      </div>
+    <% else %>
+      <div class="container my-5">
+        <div class="row justify-content-center">
+          <h2>EASY INVOICING</h2>
+        </div>
+        <%= yield %>
+      </div>
+    <% end %>
+    <%= render 'shared/flashes' %>
+  </body>
+</html>

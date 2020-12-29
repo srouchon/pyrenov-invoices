@@ -1,0 +1,68 @@
+/* VERTICAL NAVBAR */
+
+#half h1 {
+  font-family: 'Tahoma', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: black;
+}
+
+#half a:hover {
+  text-decoration: none;
+}
+
+#nav-company h3 {
+  font-family: 'Tahoma', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+}
+
+.vertical-nav {
+  position: absolute;
+  min-width: 16rem;
+  width: 16rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.1s;
+}
+
+// .separator {
+//   margin: 3rem 0;
+//   border-bottom: 1px dashed #fff;
+// }
+
+/* TOGGLE BUTTON FOR NAVBAR */
+
+#sidebar.active {
+  margin-left: -17rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: auto;
+}
+
+@media (max-width: 767px) {
+  #sidebar {
+    margin-left: -17rem;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #content {
+    width: 100%;
+    margin: 30px auto;
+  }
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+}
+
+#sidebarCollapse {
+  margin-bottom: 30px;
+}

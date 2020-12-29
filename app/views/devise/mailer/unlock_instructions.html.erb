@@ -1,0 +1,7 @@
+<p>Bonjour</p>
+
+<p>Votre compte <%= @resource.email %> a été vérouillé suite à un grand nombre de tentatives de connexion infructueuses.</p>
+
+<p>Cliquez sur le lien ci-dessous pour dévérouiller votre compte:</p>
+
+<p><%= link_to 'Dévérouiller mon compte', unlock_url(@resource, unlock_token: @token) %></p>

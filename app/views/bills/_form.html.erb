@@ -1,0 +1,19 @@
+<div>
+  <div class="row">
+    <h1><%= @bill.persisted? ? "Modifier la facture" : "Créer une nouvelle facture" %></h1>
+  </div>
+  <div>
+    <%= simple_form_for([@company, @customer, @bill]) do |f| %>
+      <%= f.input :ref_bill, label: 'Référence Facture:', value: @quote.ref_bill %>
+      <p>(Aide: dernière référence utilisée '<%= @company.bills.last ? @company.bills.last.ref_bill : 'aucune précédente facture' %>')</p>
+      <%= f.input :date, as: :date, label: 'Date:', value: @bill.date %>
+      <%= f.input :description, as: :text, label: 'Description:', value: @bill.description %>
+      <%= f.hidden_field :deposit, value: (@bill.deposit ? @bill.deposit : 0) %>
+      <%= f.hidden_field :bill_status, value: @bill.bill_status %>
+      <%= f.hidden_field :price_duty_free, value: (@bill.price_duty_free ? @bill.price_duty_free : 0) %>
+      <%= f.hidden_field :price_all_taxes, value: (@bill.price_all_taxes ? @bill.price_all_taxes : 0) %>
+      <%= link_to 'Annuler', @bill.id.nil? ? company_customer_path(@company, @customer) : company_customer_bill_path(@company, @customer, @bill), class: 'btn btn-primary' %>
+      <%= f.submit @bill.persisted? ? "Modifier cette facture" : "Créer cette facture", class: 'btn btn-secondary' %>
+    <% end %>
+  </div>
+</div>

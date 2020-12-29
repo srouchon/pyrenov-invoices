@@ -1,0 +1,126 @@
+<div>
+  <div class="row d-flex">
+    <h1 class="mr-auto">Facture - réf. <%= @bill.ref_bill %></h1>
+    <div>
+      <%= link_to 'Supprimer cette facture', company_customer_bill_path(@company, @customer, @bill), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer cette facture?" } %>
+    </div>
+  </div>
+  <div class="row d-flex"> 
+    <p class="mr-auto"><%= @bill.date.strftime("%d/%m/%Y") %> - <%= @bill.description %></p>
+    <div>
+      <%= link_to 'Modifier la description', edit_company_customer_bill_path(@company, @customer, @bill), class: 'btn btn-warning' %>
+    </div>
+  </div>
+  <div class="row d-flex">
+    <div class="mr-auto">
+      <table border="1">
+        <thead>
+          <th>Référence</th>
+          <th>Description de la prestation</th>
+          <th>Prix unitaire</th>
+          <th>Quantité</th>
+          <th>Total HT</th>
+        </thead>
+        <tbody>
+          <% if @bill.services.exists? %>
+            <% @bill.bill_services.each do |bill_service| %>
+              <tr>
+                <td><%= bill_service.service.ref_service %></td>
+                <td><%= bill_service.service.description_service %></td>
+                <td class='text-right'><%= bill_service.service.unit_price %> €</td>
+                <td class='text-right'><%= bill_service.quantity %> €</td>
+                <td class='text-right'><%= bill_service.total_price_service %> €</td>
+                <td>
+                  <%= link_to company_customer_bill_bill_service_path(@company, @customer, @bill, bill_service), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer cette prestation?" } do %>
+                    <i class="fas fa-trash-alt"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div><br>
+    <div>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceModalCenter">
+        Ajouter une prestation à la facture
+      </button>
+      <div class="modal fade" id="serviceModalCenter" tabindex="-1" role="dialog" aria-labelledby="serviceModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une prestation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <%= form_for([@company, @customer, @bill, @bill_service]) do |f| %>
+                <div class="text-center">
+                  <%= link_to 'Créer une nouvelle prestation', new_company_customer_bill_service_path(@company, @customer, @bill) %>
+                </div>
+                <br>
+                <div class="d-flex">
+                  <div class="mr-auto"><%= f.label(:service, "Sélectionner une prestation: ") %></div>
+                  <div><%= collection_select(:service, :service_id, Service.where(company_id: @company), :id, :description_service) %></div>
+                </div>
+                <div class='d-flex'>
+                  <div class='mr-auto'><%= f.label(:quantity, "Quantité (unité): ") %></div>
+                  <div><%= f.text_field(:quantity, required: true) %></div>
+                </div><br>
+                <div class="text-right">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                  <%= submit_tag "Valider la prestation", class: "btn btn-primary" %>  
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='row d-flex flex-column'>
+    <p>Acompte:  <%= @bill.deposit %> €  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#depositModalCenter">Ajouter un acompte</button></p>
+    <p>Prix Total HT: <%= @bill.price_duty_free %> €</p>
+    <p>Prix Total TTC: <%= @bill.price_all_taxes %> €</p>
+  </div>
+  <div class="row">
+    <%= link_to 'Revenir au client', company_customer_path(@company, @customer), class: 'btn btn-primary' %>
+  </div>
+  <div class="modal fade" id="depositModalCenter" tabindex="-1" role="dialog" aria-labelledby="depositModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="depositModalLongTitle">Ajouter un acompte</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <ul>
+              <li>10% d'acompte = <%= ((@bill.price_duty_free * 10) / 100).round(2) %> €</li>
+              <li>20% d'acompte = <%= ((@bill.price_duty_free * 20) / 100).round(2) %> €</li>
+            </ul>
+          </div>
+          <div>
+            <%= form_for([@company, @customer, @bill]) do |f| %>
+              <div class="d-flex">
+                <div><%= f.hidden_field(:ref_bill, value: @bill.ref_bill) %></div>
+                <div><%= f.hidden_field(:description, value: @bill.description) %></div>
+                <div><%= f.hidden_field(:bill_status, value: @bill.bill_status) %></div>
+                <div><%= f.hidden_field(:date, value: @bill.date) %></div>
+                <div class='mr-auto'><%= f.label(:deposit, "Montant (en euros): ") %></div>
+                <div><%= f.text_field(:deposit, required: true) %></div>
+              </div><br>
+              <div class="text-right">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <%= submit_tag "Valider l'acompte", class: 'btn btn-primary' %>  
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

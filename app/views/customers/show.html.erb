@@ -1,0 +1,144 @@
+<div>
+  <div class="row">
+    <h1><%= @customer.name %> - <%= @customer.ref_client %></h1>
+  </div>
+  <div class="row justify-content-between">
+    <div>
+      <div>Adresse: <%= @customer.address %> <%= @customer.postcode %> <%= @customer.city %></div>
+      <div>Téléphone: <%= @customer.phone_1 %> <%= @customer.phone_2 %></div>
+      <div>Email: <%= @customer.email_1 %> <%= @customer.email_2 %></div>
+      <div>SIREN: <%= @customer.siren %> / SIRET: <%= @customer.siret %></div>
+    </div>
+    <div class="text-right">
+      <div><%= link_to "Supprimer ce client", company_customer_path(@company, @customer), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer ce client?" } %></div>
+      <br>
+      <div><%= link_to 'Modifier ses informations', edit_company_customer_path(@company, @customer), class: 'btn btn-warning' %></div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="quote">
+  <div class="row justify-content-between">
+    <div>
+      <h2>Devis du client</h2>
+    </div>
+    <div>
+      <div>
+        <%= link_to 'Créer un devis', new_company_customer_quote_path(@company, @customer), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+  <% if @customer.quotes.blank? %>
+    <div class="row d-flex">
+      <p>Pas de devis</p>
+    </div>
+  <% else %>
+    <div class="row">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Référence</th>
+            <th>Description du devis</th>
+            <th>Acompte</th>
+            <th>Prix HT</th>
+            <th>Prix TTC</th>
+            <th>Etat</th>
+            <th>Changer l'état?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @quotes.each do |quote| %>
+            <tr>
+              <td>          
+                <%= link_to company_customer_quote_path(@company, @customer, quote) do %>
+                  <%= quote.ref_quote %></td>
+                <% end %>
+              <td><%= quote.description %></td>
+              <td><%= quote.deposit %></td>
+              <td><%= quote.price_duty_free %></td>
+              <td><%= quote.price_all_taxes %></td>
+              <td><%= quote.quote_status %></td>
+              <td>
+                <%= form_for([@company, @customer, quote]) do |f| %>
+                  <%= f.select(:quote_status, Quote.quote_statuses.keys.map {|status| status}) %>
+                  <%= f.hidden_field :ref_quote, value: quote.ref_quote %>
+                  <%= f.hidden_field :description, value: quote.description %>
+                  <%= f.hidden_field :deposit, value: quote.deposit %>
+                  <%= f.hidden_field :date, value: quote.date %>
+                  <%= submit_tag 'OK', class: 'text-primary'%>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to 'Voir détails', company_customer_quote_path(@company, @customer, quote), class: 'btn btn-secondary' %>
+              </td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
+<br>
+<div class="bill">
+  <div class='row justify-content-between'>
+    <div>
+      <h2>Factures du client</h2>
+    </div>
+    <div>
+      <div><%= link_to 'Créer une facture', new_company_customer_bill_path(@company, @customer), class: 'btn btn-primary' %></div>
+    </div>
+  </div>
+  <% if @customer.bills.blank? %>
+    <div class="row d-flex">
+      <p>Pas de facture</p>
+    </div>
+  <% else %>
+    <div class="row">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Référence</th>
+            <th>Description de la facture</th>
+            <th>Acompte</th>
+            <th>Prix HT</th>
+            <th>Prix TTC</th>
+            <th>Etat</th>
+            <th>Changer l'état?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @bills.each do |bill| %>
+            <tr>
+              <td>          
+                <%= link_to company_customer_bill_path(@company, @customer, bill) do %>
+                  <%= bill.ref_bill %></td>
+                <% end %>
+              <td><%= bill.description %></td>
+              <td><%= bill.deposit %></td>
+              <td><%= bill.price_duty_free %></td>
+              <td><%= bill.price_all_taxes %></td>
+              <td><%= bill.bill_status %></td>
+              <td>
+                <%= form_for([@company, @customer, bill]) do |f| %>
+                  <%= f.select(:bill_status, Bill.bill_statuses.keys.map {|status| status}) %>
+                  <%= f.hidden_field :ref_bill, value: bill.ref_bill %>
+                  <%= f.hidden_field :description, value: bill.description %>
+                  <%= f.hidden_field :deposit, value: bill.deposit %>
+                  <%= f.hidden_field :date, value: bill.date %>
+                  <%= submit_tag 'OK', class: 'text-primary'%>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to 'Voir détails', company_customer_bill_path(@company, @customer, bill), class: 'btn btn-secondary' %>
+              </td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
+<br>
+<div class="row">
+  <div><%= link_to 'Revenir à la liste de clients', company_customers_path(@company), class: 'btn btn-primary' %></div>
+</div>

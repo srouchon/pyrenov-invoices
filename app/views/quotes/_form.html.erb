@@ -1,0 +1,19 @@
+<div>
+  <div class="row">
+    <h1><%= @quote.persisted? ? "Modifier la devis" : "Créer un nouveau devis" %></h1>
+  </div>
+  <div>
+    <%= simple_form_for([@company, @customer, @quote]) do |f| %>
+      <%= f.input :ref_quote, label: 'Référence Devis:', value: @quote.ref_quote %>
+      <p>(aide: dernière référence utilisée '<%= @company.quotes.last ? @company.quotes.last.ref_quote : 'aucun précédent devis' %>')</p>
+      <%= f.input :date, as: :date, label: 'Date:', value: @quote.date %>
+      <%= f.input :description, as: :text, label: 'Description:', value: @quote.description %>
+      <%= f.hidden_field :deposit, value: (@quote.deposit ? @quote.deposit : 0) %>
+      <%= f.hidden_field :quote_status, value: @quote.quote_status %>
+      <%= f.hidden_field :price_duty_free, value: (@quote.price_duty_free ? @quote.price_duty_free : 0) %>
+      <%= f.hidden_field :price_all_taxes, value: (@quote.price_all_taxes ? @quote.price_all_taxes : 0) %>
+      <%= link_to 'Annuler', @quote.id.nil? ? company_customer_path(@company, @customer) : company_customer_quote_path(@company, @customer, @quote), class: 'btn btn-primary' %>
+      <%= f.submit @quote.persisted? ? "Modifier ce devis" : "Créer ce devis", class: 'btn btn-secondary' %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div>
+  <div class="row d-flex">
+    <h1 class="mr-auto">Sélectionner une entreprise</h1>
+    <div>
+      <%= link_to 'Créer une nouvelle entreprise', new_company_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="cards">
+      <% @companies.each do |company| %>
+        <div class="card">
+          <div class="card-body p-4">
+            <div>
+              <div class="row d-flex">
+                <div class="mr-auto">
+                  <%= link_to company_path(company) do %>
+                    <h4 class="card-title text-center"><%= company.name %></h4>
+                  <% end %>
+                </div>
+                <div>
+                  <%= link_to edit_company_path(company), class: 'edit text-warning' do %><i class="far fa-edit"></i><% end %>
+                </div>
+              </div>
+              <h6 class="card-title">Adresse:  <%= company.address %> <%= company.postcode %> <%= company.city %></h6>
+              <h6 class="card-title">Téléphone:  <%= company.phone %></h6>
+              <h6 class="card-title">Email:  <%= company.email %></h6>
+              <h6 class="card-title">SIRET:  <%= company.siret %></h6>
+              <h6 class="card-title">Taux de TVA:  <%= company.tva %> %</h6>
+            </div>
+            <div class='row'><%= link_to "Sélectionner", company_path(company), class: 'btn btn-secondary w-100' %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
