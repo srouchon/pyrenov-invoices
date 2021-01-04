@@ -4,10 +4,9 @@
 <% if @customer.nil? && @quote.nil? && @bill.nil? %>
   <div>
     <%= simple_form_for([@company, @service]) do |f| %>
-      <%= f.input :ref_service, label: 'Référence Prestation:' %>
-      <p>(aide: dernière référence utilisée '<%= Service.where(company_id: @company).last ? Service.where(company_id: @company).last.ref_service : 'aucune précédente prestation' %>')</p>
-      <%= f.input :description_service, label: 'Description:' %>
-      <%= f.input :unit_price, label: 'Prix unitaire:' %>
+      <%= f.input :description_service, label: 'Description' %>
+      <%= f.input :unit_price, label: 'Prix unitaire' %>
+      <%= f.input :quantity, label: 'Quantité' %>
       <%= link_to 'Annuler', company_services_path(@company), class: 'btn btn-primary' %>
       <%= f.submit @service.persisted? ? "Modifier cette prestation" : "Créer cette prestation", class: 'btn btn-secondary' %>
     <% end %>
@@ -15,10 +14,9 @@
 <% elsif @bill.nil? %>
   <div>
     <%= simple_form_for([@company, @customer, @quote, @service]) do |f| %>
-      <%= f.input :ref_service, label: 'Référence Prestation:' %>
-      <p>(aide: dernière référence utilisée '<%= Service.where(company_id: @company).last ? Service.where(company_id: @company).last.ref_service : 'aucune précédente prestation' %>')</p>
-      <%= f.input :description_service, label: 'Description:' %>
-      <%= f.input :unit_price, label: 'Prix unitaire:' %>
+      <%= f.input :description_service, label: 'Description' %>
+      <%= f.input :unit_price, label: 'Prix unitaire' %>
+      <%= f.input :quantity, label: 'Quantité' %>
       <%= link_to 'Annuler', company_customer_quote_path(@company, @customer, @quote), class: 'btn btn-primary' %>
       <%= f.submit @service.persisted? ? "Modifier cette prestation" : "Créer cette prestation", class: 'btn btn-secondary' %>
     <% end %>
@@ -26,10 +24,9 @@
 <% elsif @quote.nil? %>
   <div>
     <%= simple_form_for([@company, @customer, @bill, @service]) do |f| %>
-      <%= f.input :ref_service, label: 'Référence Prestation:' %>
-      <p>(aide: dernière référence utilisée '<%= Service.where(company_id: @company).last ? Service.where(company_id: @company).last.ref_service : 'aucune précédente prestation' %>')</p>
-      <%= f.input :description_service, label: 'Description:' %>
-      <%= f.input :unit_price, label: 'Prix unitaire:' %>
+      <%= f.input :description_service, label: 'Description' %>
+      <%= f.input :unit_price, label: 'Prix unitaire' %>
+      <%= f.input :quantity, label: 'Quantité' %>
       <%= link_to 'Annuler', company_customer_bill_path(@company, @customer, @bill), class: 'btn btn-primary' %>
       <%= f.submit @service.persisted? ? "Modifier cette prestation" : "Créer cette prestation", class: 'btn btn-secondary' %>
     <% end %>

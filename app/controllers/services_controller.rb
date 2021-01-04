@@ -24,7 +24,9 @@ class ServicesController < ApplicationController
     service = Service.new(
       ref_service: service_params[:ref_service],
       description_service: service_params[:description_service],
-      unit_price: service_params[:unit_price]
+      unit_price: service_params[:unit_price],
+      quantity: service_params[:quantity],
+      total_price_service: (service_params[:unit_price].to_i * service_params[:quantity].to_i).round(2)
     )
     service.company = @company
     authorize service
@@ -32,6 +34,12 @@ class ServicesController < ApplicationController
       if customer.nil?
         redirect_to company_services_path(@company)
       elsif bill.nil?
+        quote_service = QuoteService.create(service: service, quote: @quote)
+        new_price_duty_free = (@quote.price_duty_free + quote_service.service.total_price_service).round(2)
+        @quote.update(
+          price_duty_free: new_price_duty_free,
+          price_all_taxes: (new_price_duty_free + (new_price_duty_free * (@company.tva / 100))).round(2)
+          )
         redirect_to company_customer_quote_path(@company, customer, quote)
       elsif quote.nil?
         redirect_to company_customer_bill_path(@company, customer, bill)
@@ -41,25 +49,25 @@ class ServicesController < ApplicationController
     end
   end
 
-  def edit
-    authorize @service
-  end
+  # def edit
+  #   authorize @service
+  # end
 
-  def update
-    @service.update(service_params)
-    authorize @service
-    if @service.save
-      redirect_to company_services_path(@company)
-    else
-      render :edit
-    end
-  end
+  # def update
+  #   @service.update(service_params)
+  #   authorize @service
+  #   if @service.save
+  #     redirect_to company_services_path(@company)
+  #   else
+  #     render :edit
+  #   end
+  # end
 
-  def destroy
-    @service.destroy
-    authorize @service
-    redirect_to company_services_path(@company)
-  end
+  # def destroy
+  #   @service.destroy
+  #   authorize @service
+  #   redirect_to company_services_path(@company)
+  # end
 
   private
 
@@ -84,7 +92,7 @@ class ServicesController < ApplicationController
   end
 
   def service_params
-    params.require(:service).permit(:ref_service, :description_service, :unit_price)
+    params.require(:service).permit(:ref_service, :description_service, :unit_price, :quantity, :total_price_services)
   end
 
 end

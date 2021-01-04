@@ -1,6 +1,8 @@
 <div>
   <div class="row d-flex">
-    <h1 class="mr-auto">Devis - réf. <%= @quote.ref_quote %></h1>
+    <div class="mr-auto">
+      <h1>Devis</h1>
+    </div>
     <div class="mr-3">
       <%= link_to 'Télécharger PDF', pdf_company_customer_quote_path([@company, @customer, @quote], format: :pdf), class: 'btn btn-secondary' %>
     </div>
@@ -9,7 +11,10 @@
     </div>
   </div>
   <div class="row d-flex">
-    <p class="mr-auto"><%= @quote.date.strftime("%d/%m/%Y") %> - <%= @quote.description %></p>
+    <div class="mr-auto">
+      <h4 class='row'>Référence: <%= @quote.ref_quote %> (<%= @quote.quote_status %>)</h4>
+      <p class='row'><%= @quote.date.strftime("%d/%m/%Y") %> - <%= @quote.description %></p>
+    </div>
     <div>
       <%= link_to 'Modifier la description', edit_company_customer_quote_path(@company, @customer, @quote), class: 'btn btn-warning' %>
     </div>
@@ -18,7 +23,6 @@
     <div class="mr-auto">
       <table border="1">
         <thead>
-          <th>Référence</th>
           <th>Description de la prestation</th>
           <th>Prix unitaire</th>
           <th>Quantité</th>
@@ -28,11 +32,10 @@
           <% if @quote.services.exists? %>
             <% @quote.quote_services.each do |quote_service| %>
               <tr>
-                <td><%= quote_service.service.ref_service %></td>
                 <td><%= quote_service.service.description_service %></td>
                 <td class='text-right'><%= quote_service.service.unit_price %> €</td>
-                <td class='text-right'><%= quote_service.quantity %> €</td>
-                <td class='text-right'><%= quote_service.total_price_service %> €</td>
+                <td class='text-right'><%= quote_service.service.quantity %></td>
+                <td class='text-right'><%= quote_service.service.total_price_service %> €</td>
                 <td>
                   <%= link_to company_customer_quote_quote_service_path(@company, @customer, @quote, quote_service), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer cette prestation?" } do %>
                     <i class="fas fa-trash-alt"></i>
@@ -45,41 +48,7 @@
       </table>
     </div><br>
     <div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceModalCenter">
-        Ajouter une prestation au devis
-      </button>
-      <div class="modal fade" id="serviceModalCenter" tabindex="-1" role="dialog" aria-labelledby="serviceModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une prestation</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <%= form_for([@company, @customer, @quote, @quote_service]) do |f| %>
-                <div class="text-center">
-                  <%= link_to 'Créer une nouvelle prestation', new_company_customer_quote_service_path(@company, @customer, @quote) %>
-                </div>
-                <br>
-                <div class="d-flex">
-                  <div class="mr-auto"><%= f.label(:service, "Sélectionner une prestation: ") %></div>
-                  <div><%= collection_select(:service, :service_id, Service.where(company_id: @company), :id, :description_service) %></div>
-                </div>
-                <div class='d-flex'>
-                  <div class='mr-auto'><%= f.label(:quantity, "Quantité (unité): ") %></div>
-                  <div><%= f.text_field(:quantity, required: true) %></div>
-                </div><br>
-                <div class="text-right">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                  <%= submit_tag "Valider la prestation", class: "btn btn-primary" %>  
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= link_to "Ajouter une prestation au devis", new_company_customer_quote_service_path(@company, @customer, @quote), class: "btn btn-primary" %>
     </div>
   </div>
   <div class='row d-flex flex-column'>
@@ -102,8 +71,7 @@
         <div class="modal-body">
           <div>
             <ul>
-              <li>10% d'acompte = <%= ((@quote.price_duty_free * 10) / 100).round(2) %> €</li>
-              <li>20% d'acompte = <%= ((@quote.price_duty_free * 20) / 100).round(2) %> €</li>
+              <li>30% d'acompte = <%= ((@quote.price_duty_free * 30) / 100).round(2) %> €</li>
             </ul>
           </div>
           <div>

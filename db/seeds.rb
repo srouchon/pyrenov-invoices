@@ -19,14 +19,6 @@ company2 = Company.new(name: 'Entreprise2', address: 'Cours Saint Louis', postco
 company2.user = user1
 company2.save!
 
-puts 'Create some services'
-service1 = Service.new(ref_service: 'PREST1', description_service: 'Peinture en m2', unit_price: 15)
-service1.company = company1
-service1.save!
-service2 = Service.new(ref_service: 'PREST2', description_service: 'Carrelage en m2', unit_price: 22)
-service2.company = company1
-service2.save!
-
 puts 'Create some customers'
 client1 = Customer.new(ref_client: 'CL001', name: 'Client1', address: 'Place des Quinconces', postcode: 33000, city: 'Bordeaux', phone_1: '0505050505', email_1: 'client1@test.com', phone_2: '0505050505', email_2: 'client1@test.com', siren: '113411', siret: '11341111111')
 client1.company = company1

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_13_103217) do
+ActiveRecord::Schema.define(version: 2021_01_04_141249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,8 +76,6 @@ ActiveRecord::Schema.define(version: 2020_12_13_103217) do
     t.bigint "service_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.float "quantity"
-    t.float "total_price_service"
     t.index ["quote_id"], name: "index_quote_services_on_quote_id"
     t.index ["service_id"], name: "index_quote_services_on_service_id"
   end
@@ -103,6 +101,8 @@ ActiveRecord::Schema.define(version: 2020_12_13_103217) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "company_id"
+    t.integer "quantity"
+    t.integer "total_price_service"
     t.index ["company_id"], name: "index_services_on_company_id"
   end
 

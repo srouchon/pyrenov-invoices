@@ -13,7 +13,6 @@
     <table border="1">
       <thead>
         <tr>
-          <th>Ref_Prestation</th>
           <th>Description de la prestation</th>
           <th>Prix unitaire</th>
         </tr>
@@ -21,13 +20,12 @@
       <tbody>
         <% @services.each do |service| %>
         <tr>
-          <td id='ref-service'><%= service.ref_service %></td>
           <td><%= service.description_service %></td>
           <td class='text-right'><%= service.unit_price %> €</td>
-          <td>
-            <%= link_to 'Modifier', edit_company_service_path(@company, service), class: 'btn btn-warning' %>
-            <%= link_to 'Supprimer', company_service_path(@company, service), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer cette prestation?" } %>
-          </td>
+          <!--<td>
+            <%#= link_to 'Modifier', edit_company_service_path(@company, service), class: 'btn btn-warning' %>
+            <%#= link_to 'Supprimer', company_service_path(@company, service), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer cette prestation?" } %>
+          </td>-->
         </tr>
         <% end %>
       </tbody>
