@@ -1,12 +1,15 @@
 <div>
   <div class="row d-flex">
-    <h1 class="mr-auto">Facture - réf. <%= @bill.ref_bill %></h1>
+    <h1 class="mr-auto">Facture</h1>
     <div>
       <%= link_to 'Supprimer cette facture', company_customer_bill_path(@company, @customer, @bill), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer cette facture?" } %>
     </div>
   </div>
-  <div class="row d-flex"> 
-    <p class="mr-auto"><%= @bill.date.strftime("%d/%m/%Y") %> - <%= @bill.description %></p>
+  <div class="row d-flex">
+    <div class="mr-auto">
+      <h4 class='row'>Référence: <%= @bill.ref_bill %> (<%= @bill.bill_status %>)</h4>
+      <p class='row'><%= @bill.date.strftime("%d/%m/%Y") %> - <%= @bill.description %></p>
+    </div>
     <div>
       <%= link_to 'Modifier la description', edit_company_customer_bill_path(@company, @customer, @bill), class: 'btn btn-warning' %>
     </div>
@@ -15,7 +18,6 @@
     <div class="mr-auto">
       <table border="1">
         <thead>
-          <th>Référence</th>
           <th>Description de la prestation</th>
           <th>Prix unitaire</th>
           <th>Quantité</th>
@@ -25,11 +27,10 @@
           <% if @bill.services.exists? %>
             <% @bill.bill_services.each do |bill_service| %>
               <tr>
-                <td><%= bill_service.service.ref_service %></td>
                 <td><%= bill_service.service.description_service %></td>
                 <td class='text-right'><%= bill_service.service.unit_price %> €</td>
-                <td class='text-right'><%= bill_service.quantity %> €</td>
-                <td class='text-right'><%= bill_service.total_price_service %> €</td>
+                <td class='text-right'><%= bill_service.service.quantity %> €</td>
+                <td class='text-right'><%= bill_service.service.total_price_service %> €</td>
                 <td>
                   <%= link_to company_customer_bill_bill_service_path(@company, @customer, @bill, bill_service), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer cette prestation?" } do %>
                     <i class="fas fa-trash-alt"></i>
@@ -42,41 +43,7 @@
       </table>
     </div><br>
     <div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceModalCenter">
-        Ajouter une prestation à la facture
-      </button>
-      <div class="modal fade" id="serviceModalCenter" tabindex="-1" role="dialog" aria-labelledby="serviceModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une prestation</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <%= form_for([@company, @customer, @bill, @bill_service]) do |f| %>
-                <div class="text-center">
-                  <%= link_to 'Créer une nouvelle prestation', new_company_customer_bill_service_path(@company, @customer, @bill) %>
-                </div>
-                <br>
-                <div class="d-flex">
-                  <div class="mr-auto"><%= f.label(:service, "Sélectionner une prestation: ") %></div>
-                  <div><%= collection_select(:service, :service_id, Service.where(company_id: @company), :id, :description_service) %></div>
-                </div>
-                <div class='d-flex'>
-                  <div class='mr-auto'><%= f.label(:quantity, "Quantité (unité): ") %></div>
-                  <div><%= f.text_field(:quantity, required: true) %></div>
-                </div><br>
-                <div class="text-right">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                  <%= submit_tag "Valider la prestation", class: "btn btn-primary" %>  
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= link_to "Ajouter une prestation à la facture", new_company_customer_bill_service_path(@company, @customer, @bill), class: "btn btn-primary" %>
     </div>
   </div>
   <div class='row d-flex flex-column'>
@@ -99,8 +66,7 @@
         <div class="modal-body">
           <div>
             <ul>
-              <li>10% d'acompte = <%= ((@bill.price_duty_free * 10) / 100).round(2) %> €</li>
-              <li>20% d'acompte = <%= ((@bill.price_duty_free * 20) / 100).round(2) %> €</li>
+              <li>30% d'acompte = <%= ((@bill.price_duty_free * 30) / 100).round(2) %> €</li>
             </ul>
           </div>
           <div>

@@ -42,6 +42,12 @@ class ServicesController < ApplicationController
           )
         redirect_to company_customer_quote_path(@company, customer, quote)
       elsif quote.nil?
+        bill_service = BillService.create(service: service, bill: @bill)
+        new_price_duty_free = (@bill.price_duty_free + bill_service.service.total_price_service).round(2)
+        @bill.update(
+          price_duty_free: new_price_duty_free,
+          price_all_taxes: (new_price_duty_free + (new_price_duty_free * (@company.tva / 100))).round(2)
+          )
         redirect_to company_customer_bill_path(@company, customer, bill)
       end
     else

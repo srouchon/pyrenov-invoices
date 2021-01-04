@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_04_141249) do
+ActiveRecord::Schema.define(version: 2021_01_04_152351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,6 @@ ActiveRecord::Schema.define(version: 2021_01_04_141249) do
   create_table "bill_services", force: :cascade do |t|
     t.bigint "bill_id", null: false
     t.bigint "service_id", null: false
-    t.float "quantity"
-    t.float "total_price_service"
     t.index ["bill_id"], name: "index_bill_services_on_bill_id"
     t.index ["service_id"], name: "index_bill_services_on_service_id"
   end

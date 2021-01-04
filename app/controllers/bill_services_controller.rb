@@ -7,28 +7,28 @@ class BillServicesController < ApplicationController
     @bill_service = BillService.new
   end
   
-  def create
-    service = Service.find(params[:service][:service_id])
-    @bill_service = BillService.new(bill_services_params)
-    @bill_service.service = service
-    @bill_service.bill = @bill
-    @bill_service.total_price_service = (service.unit_price * @bill_service.quantity).round(2)
-    authorize @bill_service
-    if @bill_service.save!
-      new_price_duty_free = (@bill.price_duty_free + @bill_service.total_price_service).round(2)
-      @bill.update(
-        price_duty_free: new_price_duty_free,
-        price_all_taxes: (new_price_duty_free + (new_price_duty_free * (@company.tva / 100))).round(2)
-        )
-      redirect_to company_customer_bill_path(@company, @customer, @bill)
-    else
-      render :new
-    end
-  end
+  # def create
+  #   service = Service.find(params[:service][:service_id])
+  #   @bill_service = BillService.new(bill_services_params)
+  #   @bill_service.service = service
+  #   @bill_service.bill = @bill
+  #   @bill_service.total_price_service = (service.unit_price * @bill_service.quantity).round(2)
+  #   authorize @bill_service
+  #   if @bill_service.save!
+  #     new_price_duty_free = (@bill.price_duty_free + @bill_service.total_price_service).round(2)
+  #     @bill.update(
+  #       price_duty_free: new_price_duty_free,
+  #       price_all_taxes: (new_price_duty_free + (new_price_duty_free * (@company.tva / 100))).round(2)
+  #       )
+  #     redirect_to company_customer_bill_path(@company, @customer, @bill)
+  #   else
+  #     render :new
+  #   end
+  # end
   
   def destroy
     bill_service = BillService.find(params[:id])
-    new_price_duty_free = (@bill.price_duty_free - bill_service.total_price_service).round(2)
+    new_price_duty_free = (@bill.price_duty_free - bill_service.service.total_price_service).round(2)
     @bill.update(
       price_duty_free: new_price_duty_free,
       price_all_taxes: (new_price_duty_free + (new_price_duty_free * (@company.tva / 100))).round(2)

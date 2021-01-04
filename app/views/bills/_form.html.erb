@@ -4,10 +4,10 @@
   </div>
   <div>
     <%= simple_form_for([@company, @customer, @bill]) do |f| %>
-      <%= f.input :ref_bill, label: 'Référence Facture:', value: @quote.ref_bill %>
+      <%= f.input :ref_bill, label: 'Référence Facture', value: @bill.ref_bill %>
       <p>(Aide: dernière référence utilisée '<%= @company.bills.last ? @company.bills.last.ref_bill : 'aucune précédente facture' %>')</p>
-      <%= f.input :date, as: :date, label: 'Date:', value: @bill.date %>
-      <%= f.input :description, as: :text, label: 'Description:', value: @bill.description %>
+      <%= f.input :date, as: :date, label: 'Date', value: @bill.date %>
+      <%= f.input :description, as: :text, label: 'Description', value: @bill.description %>
       <%= f.hidden_field :deposit, value: (@bill.deposit ? @bill.deposit : 0) %>
       <%= f.hidden_field :bill_status, value: @bill.bill_status %>
       <%= f.hidden_field :price_duty_free, value: (@bill.price_duty_free ? @bill.price_duty_free : 0) %>
