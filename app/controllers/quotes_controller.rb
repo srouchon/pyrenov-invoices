@@ -55,6 +55,7 @@ class QuotesController < ApplicationController
     @quote.update(
       description: (@quote.description != quote_params[:description] ? quote_params[:description] : @quote.description), 
       ref_quote: (@quote.ref_quote != quote_params[:ref_quote] ? quote_params[:ref_quote] : @quote.ref_quote),
+      other: (@quote.other != quote_params[:other] ? quote_params[:other] : @quote.other),
       date: (@quote.date != quote_params[:date] || date ? quote_params[:date] || date : @quote.date),
       quote_status: (@quote.quote_status != params[:quote][:quote_status].downcase ? Quote.quote_statuses[params[:quote][:quote_status].downcase] : @quote.quote_status),
       deposit: (quote_params[:deposit] != 0 ? quote_params[:deposit] : 0)
@@ -88,6 +89,6 @@ class QuotesController < ApplicationController
   end
 
   def quote_params
-    params.require(:quote).permit(:description, :ref_quote, :date, :quote_status, :deposit, :price_duty_free, :price_all_taxes)
+    params.require(:quote).permit(:description, :ref_quote, :date, :quote_status, :other, :deposit, :price_duty_free, :price_all_taxes)
   end
 end
