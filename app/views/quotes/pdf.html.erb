@@ -1,1 +1,111 @@
-<h1>Test du Devis au format Portrait PDF</h1>
+<section class="entete row mx-2">
+  <table>
+    <tr>
+      <td class="company">
+        <img src="https://www.google.com/maps/uv?pb=!1s0xd5147079b29bcff%3A0x44c80735a38397d1!3m1!7e115!4shttps%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipOkWMqBBI-ehnrDH7hFl8SksLIACW7x1iZgpo-g%3Dw160-h160-k-no!5spyrenov%2064%20-%20Recherche%20Google!15sCgIgAQ&imagekey=!1e10!2sAF1QipOkWMqBBI-ehnrDH7hFl8SksLIACW7x1iZgpo-g&hl=fr&sa=X&ved=2ahUKEwjAp_CWiJbuAhUECRoKHR-hBJEQoiowFHoECCAQAw" alt="logo">
+        <%#= image_tag 'public/logo-low.png' %>
+        <div class="company-content">
+          <div><b><%= current_user.firstname.capitalize %> <%= current_user.lastname.capitalize %></b></div>
+          <div><%= @company.name %></div>
+          <div><%= @company.address %></div>
+          <div><%= @company.postcode %> <%= @company.city %></div>
+          <div><b>Tel: <%= @company.phone %></b></div>
+          <div><b>Email: <%= @company.email %></b></div>
+          <div>SIRET: <%= @company.siret %></div>
+        </div>
+      </td>
+      <td class="customer">
+        <table>
+          <div class="title">
+            <tr>
+              <h4>DEVIS N˚ <span class="ref-quote"><%= @quote.ref_quote %></span></h4>
+            </tr>
+          </div>
+          <div class="date">
+            <tr><b>Date: <%= @quote.date.strftime("%d/%m/%Y") %></b></tr>
+          </div>
+          <div class="customer-content">
+            <tr>
+              <td>à</td>
+              <td><b><%= @customer.name %></b></td>
+            </tr>
+            <tr>
+              <td>Adresse:</td>
+              <td>
+                <div><%= @customer.address %></div>
+                <div><%= @customer.postcode %> <%= @customer.city %></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Réf Client:</td>
+              <td><%= @customer.ref_client %></td>
+            </tr>
+          </div>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <br>
+</section>
+
+<section class="general-description mx-2">
+  <p><u>Nature et adresse du chantier:</u>  <%= @quote.description %></p>
+  <br>
+</section>
+
+<section class="services mx-2">
+  <div class="row d-flex">
+    <div class="row mx-2">
+      <table border="1">
+        <thead>
+          <th class="description">Description de la prestation</th>
+          <th>Prix unitaire</th>
+          <th>Quantité</th>
+          <th>Total HT</th>
+        </thead>
+        <tbody>
+          <% if @quote.services.exists? %>
+            <% @quote.quote_services.each do |quote_service| %>
+              <tr>
+                <td><%= quote_service.service.description_service %></td>
+                <td class='text-right'><%= quote_service.service.unit_price %> €</td>
+                <td class='text-right'><%= quote_service.service.quantity %></td>
+                <td class='text-right'><%= quote_service.service.total_price_service %> €</td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+</section>
+
+<section class="other mx-2">
+  <p><u>Remarques:</u></p>
+  <p><%= @quote.other %></p>
+  <br>
+</section>
+
+<section class="total mx-2">
+  <p>Acompte: <%= @quote.deposit %> €</p>
+  <p>Prix Total HT: <%= @quote.price_duty_free %> €  <i>(TVA non applicable, article 293-B du CGI)</i></p>
+  <p>Prix Total TTC: <%= @quote.price_all_taxes %> €</p>
+  <br>
+</section>
+
+<section class="legal-content mx-2">
+  <div>
+    <p><i>Réglement total à verser avant travaux si acceptation du devis</i></p>
+    <p>Assurance professionnelle: PACIFICA</p>
+    <p>Mode de réglement: chèque</p>
+  </div>
+  <br>
+  <div class="professional">
+    <h3>POUR UNE VENTE A UN PROFESSIONNEL</h3>
+    <p>Date du réglement:</p>
+    <p>Date de la prestation: du ... au ...</p>
+    <p>Pénalités de 10% en cas d'absence de paiement à compter du :</p>
+    <p>En cas de retard de paiement, il sera appliquée une indemnité forfaitaire de recouvrement de 40€ (Code du Commerce - art. D441-5)</p>
+  </div>
+</section>

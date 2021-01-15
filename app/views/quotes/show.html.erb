@@ -53,7 +53,7 @@
   </div>
   <div class="other row d-flex flex-column">
     <p><u>Remarques:</u> <button type="button" class="btn btn-link" data-toggle="modal" data-target="#otherModalCenter">Ajouter une remarque</button></p>
-    <%= @quote.other %>
+    <p><i><%= @quote.other %></i></p>
   </div>
   <div class='row d-flex flex-column'>
     <p>Acompte:  <%= @quote.deposit %> €  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#depositModalCenter">Ajouter un acompte</button></p>
@@ -103,7 +103,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="depositModalLongTitle">Ajouter une remarque</h5>
+          <h5 class="modal-title" id="depositModalLongTitle">Ajouter une remarque</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -117,7 +117,7 @@
                 <div><%= f.hidden_field(:quote_status, value: @quote.quote_status) %></div>
                 <div><%= f.hidden_field(:date, value: @quote.date) %></div>
                 <div><%= f.hidden_field(:deposit, value: @quote.deposit) %></div>
-                <div class='mr-auto'><%= f.text_field(:other, required: false) %></div>
+                <div><%= f.text_area(:other, required: false) %></div>
               </div><br>
               <div class="text-right">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>

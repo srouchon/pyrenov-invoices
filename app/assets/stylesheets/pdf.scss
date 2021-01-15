@@ -1,0 +1,65 @@
+// Graphical variables
+@import "config/fonts";
+@import "config/colors";
+@import "config/bootstrap_variables";
+
+// External libraries
+@import "bootstrap/scss/bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+body {
+  font-family: Verdana, Tahoma, sans-serif;
+  font-size: 14px;
+  background-color: white;
+}
+
+.entete {
+  /* background: red; */
+}
+
+.company {
+  /* background: blue; */
+  width: 440px;
+}
+
+.customer {
+  /* background: orange; */
+  vertical-align: bottom;
+  width: 430px;
+  h4 {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-weight: bold;
+  }
+  .customer-content {
+    margin-top: 80px;
+  }
+}
+
+.ref-quote {
+  color: red;
+}
+
+.services {
+  padding-left: 8px;
+  thead {
+    background-color: lightgray;
+  }
+  .description {
+    width: 500px;
+  }
+}
+
+.total {
+  font-weight: bold;
+}
+
+.professional {
+  border: 1px solid black;
+  padding: 15px;
+  h3 {
+    font-size: 17px;
+    font-family: Verdana, Tahoma, sans-serif;
+    text-align: center;
+  }
+}
