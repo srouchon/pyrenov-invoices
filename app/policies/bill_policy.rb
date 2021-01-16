@@ -4,7 +4,11 @@ class BillPolicy < ApplicationPolicy
       scope.all
     end
   end
-    
+  
+  def pdf?
+    true
+  end
+  
   def show?
     true
   end

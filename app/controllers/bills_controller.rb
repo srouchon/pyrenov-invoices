@@ -1,8 +1,23 @@
 class BillsController < ApplicationController
-  before_action :set_company, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  before_action :set_customer, only: [:show, :new, :create, :edit, :update, :destroy]
-  before_action :set_bill, only: [:show, :edit, :update, :destroy]
+  before_action :set_company, only: [:pdf, :index, :show, :new, :create, :edit, :update, :destroy]
+  before_action :set_customer, only: [:pdf, :show, :new, :create, :edit, :update, :destroy]
+  before_action :set_bill, only: [:pdf, :show, :edit, :update, :destroy]
 
+  def pdf
+    respond_to do |format|
+      format.pdf do
+          render pdf: "Facture",
+          page_size: 'A4',
+          template: "bills/pdf.html.erb",
+          layout: "pdf.html.erb",
+          orientation: "Portrait",
+          lowquality: true,
+          dpi: 75
+      end
+    end
+    authorize @bill
+  end
+  
   def index
     @bills = policy_scope(Bill)
   end

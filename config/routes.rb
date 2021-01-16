@@ -16,9 +16,9 @@ Rails.application.routes.draw do
       resources :bills do
         resources :bill_services
         resources :services, only: [:new, :create]
-        # member do
-        #   get :pdf
-        # end
+        member do
+          get :pdf
+        end
       end
     end
     resources :services
