@@ -10,34 +10,36 @@
       <p>Pas de client</p>
     </div>
   <% else %>
-    <div class="row">
-      <div class="cards">
-        <% @customers.each do |customer| %>
-          <div class="card">
-            <div class="card-body p-4">
-              <div>
-                <div class="row d-flex">
-                  <div class="mr-auto">
-                    <%= link_to company_customer_path(@company, customer) do %>
-                      <h4 class="card-title"><%= customer.name %></h4>
-                    <% end %>
-                  </div>
-                  <div>
-                    <%= link_to edit_company_customer_path(@company, customer), class: 'text-warning' do %><i class="far fa-edit"></i><% end %>
-                  </div>
-                </div>
-                <h6 class="card-title">Réf: <span id='ref-customer'><%= customer.ref_client %></span></h6>
-                <h6 class="card-title">Adresse: <span><%= customer.address %> <%= customer.postcode %> <%= customer.city %></span></h6>
-                <h6 class="card-title">Téléphone(s): <span><%= customer.phone_1 %> <%= customer.phone_2 %></span></h6>
-                <h6 class="card-title">Email(s): <span><%= customer.email_1 %> <%= customer.email_2 %></span></h6>
-                <h6 class="card-title">SIREN: <span><%= customer.siren %></span> / SIRET: <span><%= customer.siret %></span></h6>
-              </div>
-              <br>
-              <div class='row'><%= link_to "Sélectionner", company_customer_path(@company, customer), class: 'btn btn-secondary w-100' %></div>
-            </div>
-          </div>
-        <% end %>
-      </div>
+    <div class="row d-flex" >
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Référence</th>
+            <th>Dénomination sociale</th>
+            <th>Ville</th>
+            <th>Nb devis</th>
+            <th>Nb factures</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @customers.each do |customer| %>
+            <tr>
+              <td>
+                <%= link_to company_customer_path(@company, customer) do %>
+                  <%= customer.ref_client %>
+                <% end %>
+              </td>
+              <td><%= customer.name %></td>
+              <td><%= customer.city %></td>
+              <td class="text-right pr-1"><%= customer.quotes.count %></td>
+              <td class="text-right pr-1"><%= customer.bills.count %></td>
+              <td>
+                <%= link_to "Voir détails", company_customer_path(@company, customer), class: 'btn btn-secondary w-100' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   <% end %>
 </div>
