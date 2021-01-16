@@ -10,6 +10,7 @@
       <%= f.input :description, as: :text, label: 'Description', value: @bill.description %>
       <%= f.hidden_field :deposit, value: (@bill.deposit ? @bill.deposit : 0) %>
       <%= f.hidden_field :bill_status, value: @bill.bill_status %>
+      <%= f.hidden_field :other, value: @bill.other %>
       <%= f.hidden_field :price_duty_free, value: (@bill.price_duty_free ? @bill.price_duty_free : 0) %>
       <%= f.hidden_field :price_all_taxes, value: (@bill.price_all_taxes ? @bill.price_all_taxes : 0) %>
       <%= link_to 'Annuler', @bill.id.nil? ? company_customer_path(@company, @customer) : company_customer_bill_path(@company, @customer, @bill), class: 'btn btn-primary' %>

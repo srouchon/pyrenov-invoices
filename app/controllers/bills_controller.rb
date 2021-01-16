@@ -55,6 +55,7 @@ class BillsController < ApplicationController
     @bill.update(
       description: (@bill.description != bill_params[:description] ? bill_params[:description] : @bill.description), 
       ref_bill: (@bill.ref_bill != bill_params[:ref_bill] ? bill_params[:ref_bill] : @bill.ref_bill),
+      other: (@bill.other != bill_params[:other] ? bill_params[:other] : @bill.other),
       date: (@bill.date != bill_params[:date] || date ? bill_params[:date] || date : @bill.date),
       bill_status: (@bill.bill_status != params[:bill][:bill_status].downcase ? Bill.bill_statuses[params[:bill][:bill_status].downcase] : @bill.bill_status),
       deposit: (bill_params[:deposit] != 0 ? bill_params[:deposit] : 0)
@@ -88,6 +89,6 @@ class BillsController < ApplicationController
   end
   
   def bill_params
-    params.require(:bill).permit(:description, :ref_bill, :date, :bill_status, :deposit, :price_duty_free, :price_all_taxes)
+    params.require(:bill).permit(:description, :ref_bill, :other, :date, :bill_status, :deposit, :price_duty_free, :price_all_taxes)
   end
 end
