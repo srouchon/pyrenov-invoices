@@ -16,7 +16,7 @@
       <p class='row'><%= @quote.date.strftime("%d/%m/%Y") %> - <%= @quote.description %></p>
     </div>
     <div>
-      <%= link_to 'Modifier la description', edit_company_customer_quote_path(@company, @customer, @quote), class: 'btn btn-warning' %>
+      <%= link_to 'Modifier la date ou description', edit_company_customer_quote_path(@company, @customer, @quote), class: 'btn btn-warning' %>
     </div>
   </div>
   <div class="row d-flex">

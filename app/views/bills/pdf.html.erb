@@ -88,24 +88,32 @@
 </section>
 
 <section class="total mx-2">
-  <p>Acompte: <%= @bill.deposit %> €</p>
-  <p>Prix Total HT: <%= @bill.price_duty_free %> €  <i>(TVA non applicable, article 293-B du CGI)</i></p>
-  <p>Prix Total TTC: <%= @bill.price_all_taxes %> €</p>
+  <p>
+    Prix Total HT: <%= @bill.price_duty_free %> €  <i>(TVA non applicable, article 293-B du CGI)</i> <br>
+    Prix Total TTC: <%= @bill.price_all_taxes %> €
+  </p>
+  <p>
+    Sommes versées: <%= @bill.deposit %> € <br>
+    Somme restant due: 
+  </p>
   <br>
 </section>
 
 <section class="legal-content mx-2">
   <div>
-    <p><i>Réglement total à verser avant travaux si acceptation du devis</i></p>
-    <p>Assurance professionnelle: PACIFICA</p>
-    <p>Mode de réglement: chèque</p>
+    <p>
+      Assurance professionnelle: PACIFICA <br>
+      Mode de réglement: chèque ou virement
+    </p>
   </div>
   <br>
   <div class="professional">
     <h3>POUR UNE VENTE A UN PROFESSIONNEL</h3>
-    <p>Date du réglement:</p>
-    <p>Date de la prestation: du ... au ...</p>
-    <p>Pénalités de 10% en cas d'absence de paiement à compter du :</p>
-    <p>En cas de retard de paiement, il sera appliquée une indemnité forfaitaire de recouvrement de 40€ (Code du Commerce - art. D441-5)</p>
+    <p>
+      Date du réglement: <br>
+      Date de la prestation: du ... au ... <br>
+      Pénalités de 10% en cas d'absence de paiement à compter du : <br>
+      En cas de retard de paiement, il sera appliquée une indemnité forfaitaire de recouvrement de 40€ (Code du Commerce - art. D441-5)
+    </p>
   </div>
 </section>

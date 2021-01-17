@@ -14,7 +14,7 @@
       <p class='row'><%= @bill.date.strftime("%d/%m/%Y") %> - <%= @bill.description %></p>
     </div>
     <div>
-      <%= link_to 'Modifier la description', edit_company_customer_bill_path(@company, @customer, @bill), class: 'btn btn-warning' %>
+      <%= link_to 'Modifier la date ou description', edit_company_customer_bill_path(@company, @customer, @bill), class: 'btn btn-warning' %>
     </div>
   </div>
   <div class="row d-flex">
@@ -54,9 +54,10 @@
     <p><i><%= @bill.other %></i></p>
   </div>
   <div class='row d-flex flex-column'>
-    <p>Acompte:  <%= @bill.deposit %> €  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#depositModalCenter">Ajouter un acompte</button></p>
     <p>Prix Total HT: <%= @bill.price_duty_free %> €</p>
     <p>Prix Total TTC: <%= @bill.price_all_taxes %> €</p>
+    <p>Sommes versées:  <%= @bill.deposit %> €  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#depositModalCenter">Ajouter une somme versée</button></p>
+    <p>Somme restant due: </p> <!-- calculer automatiquement la différence entre TTC et versée -->
   </div>
   <div class="row">
     <%= link_to 'Revenir au client', company_customer_path(@company, @customer), class: 'btn btn-secondary' %>
