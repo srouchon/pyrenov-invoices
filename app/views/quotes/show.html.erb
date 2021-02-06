@@ -13,7 +13,7 @@
   <div class="row d-flex">
     <div class="mr-auto">
       <h4 class='row'>Référence: <%= @quote.ref_quote %> (<%= @quote.quote_status %>)</h4>
-      <b><p class='row'><%= @quote.date.strftime("%d/%m/%Y") %> - <%= @quote.description %></p></b>
+      <b><p class='row qb_description'><%= @quote.date.strftime("%d/%m/%Y") %> - <%= @quote.description %></p></b>
     </div>
     <div>
       <%= link_to 'Modifier la date ou description', edit_company_customer_quote_path(@company, @customer, @quote), class: 'btn btn-warning' %>

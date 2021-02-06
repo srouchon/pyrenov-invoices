@@ -11,7 +11,7 @@
   <div class="row d-flex">
     <div class="mr-auto">
       <h4 class='row'>Référence: <%= @bill.ref_bill %> (<%= @bill.bill_status %>)</h4>
-      <b><p class='row'><%= @bill.date.strftime("%d/%m/%Y") %> - <%= @bill.description %></p></b>
+      <b><p class='row qb_description'><%= @bill.date.strftime("%d/%m/%Y") %> - <%= @bill.description %></p></b>
     </div>
     <div>
       <%= link_to 'Modifier la date ou description', edit_company_customer_bill_path(@company, @customer, @bill), class: 'btn btn-warning' %>
