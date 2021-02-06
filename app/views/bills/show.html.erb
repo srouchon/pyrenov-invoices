@@ -10,7 +10,7 @@
   </div>
   <div class="row d-flex">
     <div class="mr-auto">
-      <h4 class='row'>Référence: <%= @bill.ref_bill %> (<%= @bill.bill_status %>)</h4>
+      <h4 class='row'>Référence: <%= @bill.ref_bill %> (état: <u><%= @bill.bill_status %></u>)</h4>
       <b><p class='row qb_description'><%= @bill.date.strftime("%d/%m/%Y") %> - <%= @bill.description %></p></b>
     </div>
     <div>
