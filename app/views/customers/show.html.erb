@@ -54,9 +54,9 @@
                   <%= quote.ref_quote %></td>
                 <% end %>
               <td class='table_qb_description'><%= quote.description %></td>
-              <td><%= quote.deposit %></td>
-              <td><%= quote.price_duty_free %></td>
-              <td><%= quote.price_all_taxes %></td>
+              <td><%= quote.deposit %> €</td>
+              <td><%= quote.price_duty_free %> €</td>
+              <td><%= quote.price_all_taxes %> €</td>
               <td><%= quote.quote_status %></td>
               <td>
                 <%= form_for([@company, @customer, quote]) do |f| %>
