@@ -4,6 +4,7 @@ class BillsController < ApplicationController
   before_action :set_bill, only: [:pdf, :show, :edit, :update, :destroy]
 
   def pdf
+    @bill_amount_paid = (@bill.price_all_taxes - @bill.deposit).round(2)
     respond_to do |format|
       format.pdf do
           render pdf: "Facture",
@@ -24,6 +25,7 @@ class BillsController < ApplicationController
   
   def show
     @bill_service = BillService.new
+    @bill_amount_paid = (@bill.price_all_taxes - @bill.deposit).round(2)
     authorize @bill
   end
   
