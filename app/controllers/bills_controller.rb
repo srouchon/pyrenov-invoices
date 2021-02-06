@@ -58,10 +58,10 @@ class BillsController < ApplicationController
       description: (@bill.description != bill_params[:description] ? bill_params[:description] : @bill.description), 
       ref_bill: (@bill.ref_bill != bill_params[:ref_bill] ? bill_params[:ref_bill] : @bill.ref_bill),
       other: (@bill.other != bill_params[:other] ? bill_params[:other] : @bill.other),
-      date: (@bill.date != bill_params[:date] || date ? bill_params[:date] || date : @bill.date),
-      date_asked_payment: (@bill.date_asked_payment != bill_params[:date_asked_payment] || date_asked_payment ? bill_params[:date_asked_payment] || date_asked_payment : @bill.date_asked_payment),
-      date_start_service: (@bill.date_start_service != bill_params[:date_start_service] || date_start_service ? bill_params[:date_start_service] || date_start_service : @bill.date_start_service),
-      date_end_service: (@bill.date_end_service != bill_params[:date_end_service] || date_end_service ? bill_params[:date_end_service] || date_end_service : @bill.date_end_service),
+      date: (@bill.date != bill_params[:date] ? bill_params[:date] : @bill.date),
+      date_asked_payment: (@bill.date_asked_payment != bill_params[:date_asked_payment] ? bill_params[:date_asked_payment] : @bill.date_asked_payment),
+      date_start_service: (@bill.date_start_service != bill_params[:date_start_service] ? bill_params[:date_start_service] : @bill.date_start_service),
+      date_end_service: (@bill.date_end_service != bill_params[:date_end_service] ? bill_params[:date_end_service] : @bill.date_end_service),
       bill_status: (@bill.bill_status != params[:bill][:bill_status].downcase ? Bill.bill_statuses[params[:bill][:bill_status].downcase] : @bill.bill_status),
       deposit: (bill_params[:deposit] != 0 ? bill_params[:deposit] : 0)
     )

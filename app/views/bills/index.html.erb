@@ -41,9 +41,14 @@
             <td>
                 <%= form_for([@company, bill.customer, bill]) do |f| %>
                   <%= f.select(:bill_status, Bill.bill_statuses.keys.map {|status| status}) %>
-                  <%= f.hidden_field :ref_bill, value: bill.ref_bill %>
-                  <%= f.hidden_field :description, value: bill.description %>
-                  <%= f.hidden_field :date, value: bill.date %>
+                  <%= f.hidden_field(:ref_bill, value: bill.ref_bill) %>
+                  <%= f.hidden_field(:description, value: bill.description) %>
+                  <%= f.hidden_field(:date, value: bill.date) %>
+                  <%= f.hidden_field(:date_asked_payment, value: bill.date_asked_payment) %>
+                  <%= f.hidden_field(:date_start_service, value: bill.date_start_service) %>
+                  <%= f.hidden_field(:date_end_service, value: bill.date_end_service) %>
+                  <%= f.hidden_field(:deposit, value: bill.deposit) %>
+                  <%= f.hidden_field(:other, value: bill.other) %>
                   <%= submit_tag 'OK', class: 'text-primary'%>
                 <% end %>
               </td>

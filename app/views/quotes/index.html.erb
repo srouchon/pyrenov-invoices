@@ -43,7 +43,12 @@
                   <%= f.select(:quote_status, Quote.quote_statuses.keys.map {|status| status}) %>
                   <%= f.hidden_field :ref_quote, value: quote.ref_quote %>
                   <%= f.hidden_field :description, value: quote.description %>
-                  <%= f.hidden_field :date, value: quote.date %>
+                  <%= f.hidden_field(:date, value: quote.date) %>
+                  <%= f.hidden_field(:date_asked_payment, value: quote.date_asked_payment) %>
+                  <%= f.hidden_field(:date_start_service, value: quote.date_start_service) %>
+                  <%= f.hidden_field(:date_end_service, value: quote.date_end_service) %>
+                  <%= f.hidden_field(:deposit, value: quote.deposit) %>
+                  <%= f.hidden_field(:other, value: quote.other) %>
                   <%= submit_tag 'OK', class: 'text-primary'%>
                 <% end %>
               </td>
