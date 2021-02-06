@@ -23,7 +23,7 @@
         <thead>
           <th class='table_qb_description'>Description de la prestation</th>
           <th>Prix unitaire</th>
-          <th>Quantité</th>
+          <th>Qté</th>
           <th>Total HT</th>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@
               <tr>
                 <td class='table_qb_description'><%= bill_service.service.description_service %></td>
                 <td class='text-right'><%= bill_service.service.unit_price %> €</td>
-                <td class='text-right'><%= bill_service.service.quantity %> €</td>
+                <td class='text-right'><%= bill_service.service.quantity %></td>
                 <td class='text-right'><%= bill_service.service.total_price_service %> €</td>
                 <td>
                   <%= link_to company_customer_bill_bill_service_path(@company, @customer, @bill, bill_service), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer cette prestation?" } do %>
