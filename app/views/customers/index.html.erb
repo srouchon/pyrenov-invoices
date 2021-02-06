@@ -34,7 +34,7 @@
               <td class="text-right pr-1"><%= customer.quotes.count %></td>
               <td class="text-right pr-1"><%= customer.bills.count %></td>
               <td>
-                <%= link_to "Voir détails", company_customer_path(@company, customer), class: 'btn btn-secondary w-100' %>
+                <%= link_to "Détails", company_customer_path(@company, customer), class: 'btn btn-secondary w-100' %>
               </td>
             </tr>
           <% end %>
