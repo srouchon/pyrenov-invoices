@@ -38,7 +38,7 @@
         <thead>
           <tr>
             <th>Référence</th>
-            <th>Description du devis</th>
+            <th class='table_qb_description'>Description du devis</th>
             <th>Acompte</th>
             <th>Prix HT</th>
             <th>Prix TTC</th>
@@ -53,7 +53,7 @@
                 <%= link_to company_customer_quote_path(@company, @customer, quote) do %>
                   <%= quote.ref_quote %></td>
                 <% end %>
-              <td><%= quote.description %></td>
+              <td class='table_qb_description'><%= quote.description %></td>
               <td><%= quote.deposit %></td>
               <td><%= quote.price_duty_free %></td>
               <td><%= quote.price_all_taxes %></td>
@@ -73,7 +73,7 @@
                 <% end %>
               </td>
               <td>
-                <%= link_to 'Voir détails', company_customer_quote_path(@company, @customer, quote), class: 'btn btn-secondary' %>
+                <%= link_to 'Détails', company_customer_quote_path(@company, @customer, quote), class: 'btn btn-secondary' %>
               </td>
             </tr>
             <% end %>
@@ -102,7 +102,7 @@
         <thead>
           <tr>
             <th>Référence</th>
-            <th>Description de la facture</th>
+            <th class='table_qb_description'>Description de la facture</th>
             <th>Acompte</th>
             <th>Prix HT</th>
             <th>Prix TTC</th>
@@ -117,7 +117,7 @@
                 <%= link_to company_customer_bill_path(@company, @customer, bill) do %>
                   <%= bill.ref_bill %></td>
                 <% end %>
-              <td><%= bill.description %></td>
+              <td class='table_qb_description'><%= bill.description %></td>
               <td><%= bill.deposit %></td>
               <td><%= bill.price_duty_free %></td>
               <td><%= bill.price_all_taxes %></td>
@@ -137,7 +137,7 @@
                 <% end %>
               </td>
               <td>
-                <%= link_to 'Voir détails', company_customer_bill_path(@company, @customer, bill), class: 'btn btn-secondary' %>
+                <%= link_to 'Détails', company_customer_bill_path(@company, @customer, bill), class: 'btn btn-secondary' %>
               </td>
             </tr>
             <% end %>

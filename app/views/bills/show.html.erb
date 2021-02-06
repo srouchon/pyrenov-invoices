@@ -21,7 +21,7 @@
     <div class="mr-auto">
       <table border="1">
         <thead>
-          <th>Description de la prestation</th>
+          <th class='table_qb_description'>Description de la prestation</th>
           <th>Prix unitaire</th>
           <th>Quantité</th>
           <th>Total HT</th>
@@ -30,7 +30,7 @@
           <% if @bill.services.exists? %>
             <% @bill.bill_services.each do |bill_service| %>
               <tr>
-                <td><%= bill_service.service.description_service %></td>
+                <td class='table_qb_description'><%= bill_service.service.description_service %></td>
                 <td class='text-right'><%= bill_service.service.unit_price %> €</td>
                 <td class='text-right'><%= bill_service.service.quantity %> €</td>
                 <td class='text-right'><%= bill_service.service.total_price_service %> €</td>

@@ -41,8 +41,8 @@
       <thead>
         <tr>
           <th>Référence</th>
-          <th>Client</th>
-          <th>Description du devis</th>
+          <th class='table_dash_customer'>Client</th>
+          <th class='table_dash_description'>Description du devis</th>
           <th>Acompte</th>
           <th>Prix HT</th>
           <th>Prix TTC</th>
@@ -58,12 +58,12 @@
                 <%= quote.ref_quote %>
               <% end %>
             </td>
-            <td>
+            <td class='table_dash_customer'>
               <%= link_to company_customer_path(@company, quote.customer.id) do %>
                 <%= quote.customer.name %>
               <% end %>
             </td>
-            <td><%= quote.description %></td>
+            <td class='table_dash_description'><%= quote.description %></td>
             <td class='text-right'><%= quote.deposit %> €</td>
             <td class='text-right'><%= quote.price_duty_free %> €</td>
             <td class='text-right'><%= quote.price_all_taxes %> €</td>
@@ -83,7 +83,7 @@
                 <% end %>
               </td>
             <td>
-              <%= link_to 'Voir détails', company_customer_quote_path(@company, quote.customer.id, quote.id), class: 'btn btn-secondary' %>
+              <%= link_to 'Détails', company_customer_quote_path(@company, quote.customer.id, quote.id), class: 'btn btn-secondary' %>
             </td>
           </tr>
         <% end %>
@@ -110,8 +110,8 @@
       <thead>
         <tr>
           <th>Référence</th>
-          <th>Client</th>
-          <th>Description de la facture</th>
+          <th class='table_dash_customer'>Client</th>
+          <th class="table_dash_description">Description de la facture</th>
           <th>Acompte</th>
           <th>Prix HT</th>
           <th>Prix TTC</th>
@@ -127,12 +127,12 @@
                 <%= bill.ref_bill %>
               <% end %>
             </td>
-            <td>
+            <td class='table_dash_customer'>
               <%= link_to company_customer_path(@company, bill.customer.id) do %>
                 <%= bill.customer.name %>
               <% end %>
             </td>
-            <td><%= bill.description %></td>
+            <td class='table_dash_description'><%= bill.description %></td>
             <td class='text-right'><%= bill.deposit %> €</td>
             <td class='text-right'><%= bill.price_duty_free %> €</td>
             <td class='text-right'><%= bill.price_all_taxes %> €</td>
@@ -152,7 +152,7 @@
                 <% end %>
               </td>
             <td>
-              <%= link_to 'Voir détails', company_customer_bill_path(@company, bill.customer.id, bill.id), class: 'btn btn-secondary' %>
+              <%= link_to 'Détails', company_customer_bill_path(@company, bill.customer.id, bill.id), class: 'btn btn-secondary' %>
             </td>
           </tr>
         <% end %>
