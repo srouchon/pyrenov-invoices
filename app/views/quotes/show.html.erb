@@ -62,7 +62,7 @@
       <p>Acompte à verser:  <%= @quote.deposit %> €  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#depositModalCenter">Ajouter un acompte</button></p>
     </b>
   </div>
-    <div class="dates row d-flex flex-column">
+  <div class="dates row d-flex flex-column">
     <p>Date du réglement:  <%= @quote.date_asked_payment.strftime("%d/%m/%Y") unless @quote.date_asked_payment.nil? %>  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateAskedPaymentModalCenter">Ajouter une date de réglement</button></p>
     <p>Date de début de la prestation:  <%= @quote.date_start_service.strftime("%d/%m/%Y") unless @quote.date_start_service.nil? %>  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateStartServiceModalCenter">Ajouter une date de début</button></p>
     <p>Date de fin de la prestation:  <%= @quote.date_end_service.strftime("%d/%m/%Y") unless @quote.date_end_service.nil? %>  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateEndServiceModalCenter">Ajouter une date de fin</button></p>
@@ -71,6 +71,7 @@
   <div class="row">
     <%= link_to 'Revenir au client', company_customer_path(@company, @customer), class: 'btn btn-secondary' %>
   </div>
+  
   <div class="modal fade" id="depositModalCenter" tabindex="-1" role="dialog" aria-labelledby="depositModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">

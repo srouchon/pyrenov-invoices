@@ -110,9 +110,9 @@
   <div class="professional">
     <h3>POUR UNE VENTE A UN PROFESSIONNEL</h3>
     <p>
-      Date du réglement: <br>
-      Date de la prestation: du ... au ... <br>
-      Pénalités de 10% en cas d'absence de paiement à compter du : <br>
+      Date du réglement: <%= @bill.date_asked_payment.strftime("%d/%m/%Y") unless @bill.date_asked_payment.nil? %><br>
+      Date de la prestation: du <%= @bill.date_start_service.strftime("%d/%m/%Y") unless @bill.date_start_service.nil? %> au <%= @bill.date_end_service.strftime("%d/%m/%Y") unless @bill.date_end_service.nil? %> <br>
+      Pénalités de 10% en cas d'absence de paiement à compter du : <%= (@bill.date_asked_payment + 60.days).strftime("%d/%m/%Y") unless @bill.date_asked_payment.nil? %><br>
       En cas de retard de paiement, il sera appliquée une indemnité forfaitaire de recouvrement de 40€ (Code du Commerce - art. D441-5)
     </p>
   </div>

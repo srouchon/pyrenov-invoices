@@ -59,6 +59,9 @@ class BillsController < ApplicationController
       ref_bill: (@bill.ref_bill != bill_params[:ref_bill] ? bill_params[:ref_bill] : @bill.ref_bill),
       other: (@bill.other != bill_params[:other] ? bill_params[:other] : @bill.other),
       date: (@bill.date != bill_params[:date] || date ? bill_params[:date] || date : @bill.date),
+      date_asked_payment: (@bill.date_asked_payment != bill_params[:date_asked_payment] || date_asked_payment ? bill_params[:date_asked_payment] || date_asked_payment : @bill.date_asked_payment),
+      date_start_service: (@bill.date_start_service != bill_params[:date_start_service] || date_start_service ? bill_params[:date_start_service] || date_start_service : @bill.date_start_service),
+      date_end_service: (@bill.date_end_service != bill_params[:date_end_service] || date_end_service ? bill_params[:date_end_service] || date_end_service : @bill.date_end_service),
       bill_status: (@bill.bill_status != params[:bill][:bill_status].downcase ? Bill.bill_statuses[params[:bill][:bill_status].downcase] : @bill.bill_status),
       deposit: (bill_params[:deposit] != 0 ? bill_params[:deposit] : 0)
     )
@@ -91,6 +94,9 @@ class BillsController < ApplicationController
   end
   
   def bill_params
-    params.require(:bill).permit(:description, :ref_bill, :other, :date, :bill_status, :deposit, :price_duty_free, :price_all_taxes)
+    params.require(:bill).permit(:description, :ref_bill, :date, 
+                                 :date_asked_payment, :date_start_service, :date_end_service,
+                                 :bill_status, :other, :deposit, 
+                                 :price_duty_free, :price_all_taxes)
   end
 end

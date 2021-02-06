@@ -11,7 +11,7 @@
   <div class="row d-flex">
     <div class="mr-auto">
       <h4 class='row'>Référence: <%= @bill.ref_bill %> (<%= @bill.bill_status %>)</h4>
-      <p class='row'><%= @bill.date.strftime("%d/%m/%Y") %> - <%= @bill.description %></p>
+      <b><p class='row'><%= @bill.date.strftime("%d/%m/%Y") %> - <%= @bill.description %></p></b>
     </div>
     <div>
       <%= link_to 'Modifier la date ou description', edit_company_customer_bill_path(@company, @customer, @bill), class: 'btn btn-warning' %>
@@ -54,14 +54,23 @@
     <p><i><%= @bill.other %></i></p>
   </div>
   <div class='row d-flex flex-column'>
-    <p>Prix Total HT: <%= @bill.price_duty_free %> €</p>
-    <p>Prix Total TTC: <%= @bill.price_all_taxes %> €</p>
-    <p>Sommes versées:  <%= @bill.deposit %> €  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#depositModalCenter">Ajouter une somme versée</button></p>
-    <p>Somme restant due: <%= @bill_amount_paid %> €</p>
+    <b>
+      <p>Prix Total HT: <%= @bill.price_duty_free %> €</p>
+      <p>Prix Total TTC: <%= @bill.price_all_taxes %> €</p>
+      <p>Sommes versées:  <%= @bill.deposit %> €  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#depositModalCenter">Ajouter une somme versée</button></p>
+      <p>Somme restant due: <%= @bill_amount_paid %> €</p>
+    </b>
   </div>
+  <div class="dates row d-flex flex-column">
+    <p>Date du réglement:  <%= @bill.date_asked_payment.strftime("%d/%m/%Y") unless @bill.date_asked_payment.nil? %>  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateAskedPaymentModalCenter">Ajouter une date de réglement</button></p>
+    <p>Date de début de la prestation:  <%= @bill.date_start_service.strftime("%d/%m/%Y") unless @bill.date_start_service.nil? %>  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateStartServiceModalCenter">Ajouter une date de début</button></p>
+    <p>Date de fin de la prestation:  <%= @bill.date_end_service.strftime("%d/%m/%Y") unless @bill.date_end_service.nil? %>  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateEndServiceModalCenter">Ajouter une date de fin</button></p>
+  </div>
+  
   <div class="row">
     <%= link_to 'Revenir au client', company_customer_path(@company, @customer), class: 'btn btn-secondary' %>
   </div>
+  
   <div class="modal fade" id="depositModalCenter" tabindex="-1" role="dialog" aria-labelledby="depositModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -84,6 +93,9 @@
                 <div><%= f.hidden_field(:description, value: @bill.description) %></div>
                 <div><%= f.hidden_field(:bill_status, value: @bill.bill_status) %></div>
                 <div><%= f.hidden_field(:date, value: @bill.date) %></div>
+                <div><%= f.hidden_field(:date_asked_payment, value: @bill.date_asked_payment) %></div>
+                <div><%= f.hidden_field(:date_start_service, value: @bill.date_start_service) %></div>
+                <div><%= f.hidden_field(:date_end_service, value: @bill.date_end_service) %></div>
                 <div><%= f.hidden_field(:other, value: @bill.other) %></div>
                 <div class='mr-auto'><%= f.label(:deposit, "Montant (en euros): ") %></div>
                 <div><%= f.text_field(:deposit, required: true) %></div>
@@ -102,7 +114,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="depositModalLongTitle">Ajouter une remarque</h5>
+          <h5 class="modal-title" id="otherModalLongTitle">Ajouter une remarque</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -115,12 +127,114 @@
                 <div><%= f.hidden_field(:description, value: @bill.description) %></div>
                 <div><%= f.hidden_field(:bill_status, value: @bill.bill_status) %></div>
                 <div><%= f.hidden_field(:date, value: @bill.date) %></div>
+                <div><%= f.hidden_field(:date_asked_payment, value: @bill.date_asked_payment) %></div>
+                <div><%= f.hidden_field(:date_start_service, value: @bill.date_start_service) %></div>
+                <div><%= f.hidden_field(:date_end_service, value: @bill.date_end_service) %></div>
                 <div><%= f.hidden_field(:deposit, value: @bill.deposit) %></div>
                 <div><%= f.text_area(:other, required: false) %></div>
               </div><br>
               <div class="text-right">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                 <%= submit_tag "Valider la remarque", class: 'btn btn-primary' %>  
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="modal fade" id="dateAskedPaymentModalCenter" tabindex="-1" role="dialog" aria-labelledby="dateAskedPaymentModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="dateAskedPaymentModalLongTitle">Ajouter une date de réglement</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <%= form_for([@company, @customer, @bill]) do |f| %>
+              <div class="d-flex">
+                <div><%= f.hidden_field(:ref_bill, value: @bill.ref_bill) %></div>
+                <div><%= f.hidden_field(:description, value: @bill.description) %></div>
+                <div><%= f.hidden_field(:bill_status, value: @bill.bill_status) %></div>
+                <div><%= f.hidden_field(:date, value: @bill.date) %></div>
+                <div><%= f.hidden_field(:date_start_service, value: @bill.date_start_service) %></div>
+                <div><%= f.hidden_field(:date_end_service, value: @bill.date_end_service) %></div>
+                <div><%= f.hidden_field(:deposit, value: @bill.deposit) %></div>
+                <div><%= f.hidden_field(:other, value: @bill.other) %></div>
+                <div><%= f.date_field(:date_asked_payment, required: false) %></div>
+              </div><br>
+              <div class="text-right">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <%= submit_tag "Valider la date", class: 'btn btn-primary' %>  
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="dateStartServiceModalCenter" tabindex="-1" role="dialog" aria-labelledby="dateStartServiceModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="dateStartServiceModalLongTitle">Ajouter une date de début de prestation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <%= form_for([@company, @customer, @bill]) do |f| %>
+              <div class="d-flex">
+                <div><%= f.hidden_field(:ref_bill, value: @bill.ref_bill) %></div>
+                <div><%= f.hidden_field(:description, value: @bill.description) %></div>
+                <div><%= f.hidden_field(:bill_status, value: @bill.bill_status) %></div>
+                <div><%= f.hidden_field(:date, value: @bill.date) %></div>
+                <div><%= f.hidden_field(:date_asked_payment, value: @bill.date_asked_payment) %></div>
+                <div><%= f.hidden_field(:date_end_service, value: @bill.date_end_service) %></div>
+                <div><%= f.hidden_field(:deposit, value: @bill.deposit) %></div>
+                <div><%= f.hidden_field(:other, value: @bill.other) %></div>
+                <div><%= f.date_field(:date_start_service, required: false) %></div>
+              </div><br>
+              <div class="text-right">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <%= submit_tag "Valider la date", class: 'btn btn-primary' %>  
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="dateEndServiceModalCenter" tabindex="-1" role="dialog" aria-labelledby="dateEndServiceModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="dateEndServiceModalLongTitle">Ajouter une date de fin de prestation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <%= form_for([@company, @customer, @bill]) do |f| %>
+              <div class="d-flex">
+                <div><%= f.hidden_field(:ref_bill, value: @bill.ref_bill) %></div>
+                <div><%= f.hidden_field(:description, value: @bill.description) %></div>
+                <div><%= f.hidden_field(:bill_status, value: @bill.bill_status) %></div>
+                <div><%= f.hidden_field(:date, value: @bill.date) %></div>
+                <div><%= f.hidden_field(:date_asked_payment, value: @bill.date_asked_payment) %></div>
+                <div><%= f.hidden_field(:date_start_service, value: @bill.date_start_service) %></div>
+                <div><%= f.hidden_field(:deposit, value: @bill.deposit) %></div>
+                <div><%= f.hidden_field(:other, value: @bill.other) %></div>
+                <div><%= f.date_field(:date_end_service, required: false) %></div>
+              </div><br>
+              <div class="text-right">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <%= submit_tag "Valider la date", class: 'btn btn-primary' %>  
               </div>
             <% end %>
           </div>
