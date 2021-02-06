@@ -11,6 +11,9 @@
       <%= f.hidden_field :deposit, value: (@quote.deposit ? @quote.deposit : 0) %>
       <%= f.hidden_field :quote_status, value: @quote.quote_status %>
       <%= f.hidden_field :other, value: (@quote.other ? @quote.other : '') %>
+      <%= f.hidden_field :date_asked_payment, value: (@quote.date_asked_payment ? @quote.date_asked_payment : nil) %>
+      <%= f.hidden_field :date_start_service, value: (@quote.date_start_service ? @quote.date_start_service : nil) %>
+      <%= f.hidden_field :date_end_service, value: (@quote.date_end_service ? @quote.date_end_service : nil) %>
       <%= f.hidden_field :price_duty_free, value: (@quote.price_duty_free ? @quote.price_duty_free : 0) %>
       <%= f.hidden_field :price_all_taxes, value: (@quote.price_all_taxes ? @quote.price_all_taxes : 0) %>
       <%= link_to 'Annuler', @quote.id.nil? ? company_customer_path(@company, @customer) : company_customer_quote_path(@company, @customer, @quote), class: 'btn btn-primary' %>

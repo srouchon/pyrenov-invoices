@@ -1,8 +1,8 @@
 <div>
   <div class="row d-flex">
-    <h1 class="mr-auto">FACTURE</h1>
+    <h1 class="mr-auto">Modifier la FACTURE</h1>
     <div class="mr-3">
-      <%= link_to 'Télécharger PDF', pdf_company_customer_bill_path([@company, @customer, @bill], format: :pdf), class: 'btn btn-secondary' %>
+      <%= link_to 'Télécharger en PDF', pdf_company_customer_bill_path([@company, @customer, @bill], format: :pdf), class: 'btn btn-secondary' %>
     </div>
     <div>
       <%= link_to 'Supprimer cette facture', company_customer_bill_path(@company, @customer, @bill), method: :delete, class: 'btn btn-danger', data: { confirm: "Etes-vous sûr(e) de vouloir supprimer cette facture?" } %>

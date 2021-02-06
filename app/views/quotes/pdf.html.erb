@@ -88,11 +88,11 @@
 </section>
 
 <section class="total mx-2">
-  <p>Acompte à verser avant travaux si acceptation du devis: <%= @quote.deposit %> € </p>
   <p>
     Prix Total HT: <%= @quote.price_duty_free %> €  <i>(TVA non applicable, article 293-B du CGI)</i> <br>
     Prix Total TTC: <%= @quote.price_all_taxes %> €
   </p>
+  <p>Acompte à verser avant travaux si acceptation du devis: <%= @quote.deposit %> € </p>
 </section>
 
 <section class="signature">
@@ -110,9 +110,9 @@
   <div class="professional">
     <h3>POUR UNE VENTE A UN PROFESSIONNEL</h3>
     <p>
-      Date du réglement: <br>
-      Date de la prestation: du ... au ... <br>
-      Pénalités de 10% en cas d'absence de paiement à compter du : <br>
+      Date du réglement: <%= @quote.date_asked_payment.strftime("%d/%m/%Y") unless @quote.date_asked_payment.nil? %><br>
+      Date de la prestation: du <%= @quote.date_start_service.strftime("%d/%m/%Y") unless @quote.date_start_service.nil? %> au <%= @quote.date_end_service.strftime("%d/%m/%Y") unless @quote.date_end_service.nil? %> <br>
+      Pénalités de 10% en cas d'absence de paiement à compter du : <%= (@quote.date_asked_payment + 60.days).strftime("%d/%m/%Y") unless @quote.date_asked_payment.nil? %><br>
       En cas de retard de paiement, il sera appliquée une indemnité forfaitaire de recouvrement de 40€ (Code du Commerce - art. D441-5)
     </p>
   </div>
