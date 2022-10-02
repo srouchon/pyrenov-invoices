@@ -6,7 +6,7 @@
     <%= simple_form_for([@company, @customer]) do |f| %>
       <%= f.input :name, label: 'Nom ou Dénomination sociale:' %>
       <%= f.input :ref_client, label: 'Référence Client:' %>
-      <p>(aide: dernière référence utilisée '<%= @company.customers.last.ref_client ? @company.customers.last.ref_client : 'aucun précédent client' %>')</p>
+      <p>(aide: dernière référence utilisée '<%= @company.customers.last ? @company.customers.last.ref_client : 'aucun précédent client' %>')</p>
       <%= f.input :address, label: 'Adresse:' %>
       <%= f.input :postcode, label: 'Code postal:' %>
       <%= f.input :city, label: 'Ville:' %>
