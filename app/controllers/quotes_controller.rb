@@ -6,10 +6,11 @@ class QuotesController < ApplicationController
   def pdf
     respond_to do |format|
       format.pdf do
-          render pdf: "Devis",
+        render pdf: "Devis",
           page_size: 'A4',
-          template: "quotes/pdf.html.erb",
-          layout: "pdf.html.erb",
+          template: "quotes/pdf",
+          layout: "pdf",
+          formats: [:html],
           orientation: "Portrait",
           lowquality: true,
           dpi: 75
@@ -17,7 +18,7 @@ class QuotesController < ApplicationController
     end
     authorize @quote
   end
-  
+
   def index
     @quotes = policy_scope(Quote)
   end
@@ -31,7 +32,7 @@ class QuotesController < ApplicationController
     @quote = Quote.new
     authorize @quote
   end
-  
+
   def create
     quote = Quote.new(quote_params)
     quote.customer = @customer
@@ -52,7 +53,7 @@ class QuotesController < ApplicationController
   def update
     date = "#{quote_params["date(1i)"]}-#{quote_params["date(2i)"]}-#{quote_params["date(3i)"]}"
     @quote.update(
-      description: (@quote.description != quote_params[:description] ? quote_params[:description] : @quote.description), 
+      description: (@quote.description != quote_params[:description] ? quote_params[:description] : @quote.description),
       ref_quote: (@quote.ref_quote != quote_params[:ref_quote] ? quote_params[:ref_quote] : @quote.ref_quote),
       other: (@quote.other != quote_params[:other] ? quote_params[:other] : @quote.other),
       date: (@quote.date != quote_params[:date] ? quote_params[:date] : @quote.date),
@@ -91,9 +92,9 @@ class QuotesController < ApplicationController
   end
 
   def quote_params
-    params.require(:quote).permit(:quote_status, :description, :ref_quote, :date, 
-                                  :date_asked_payment, :date_start_service, :date_end_service, 
-                                  :quote_status, :other, :deposit, 
+    params.require(:quote).permit(:quote_status, :description, :ref_quote, :date,
+                                  :date_asked_payment, :date_start_service, :date_end_service,
+                                  :quote_status, :other, :deposit,
                                   :price_duty_free, :price_all_taxes)
   end
 end

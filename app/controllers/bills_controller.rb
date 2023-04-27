@@ -9,8 +9,9 @@ class BillsController < ApplicationController
       format.pdf do
           render pdf: "Facture",
           page_size: 'A4',
-          template: "bills/pdf.html.erb",
-          layout: "pdf.html.erb",
+          template: "bills/pdf",
+          layout: "pdf",
+          formats: [:html],
           orientation: "Portrait",
           lowquality: true,
           dpi: 75
@@ -18,23 +19,23 @@ class BillsController < ApplicationController
     end
     authorize @bill
   end
-  
+
   def index
     @bills = policy_scope(Bill)
   end
-  
+
   def show
     @bill_service = BillService.new
     @bill_amount_paid = (@bill.price_all_taxes - @bill.deposit).round(2)
     authorize @bill
   end
-  
+
   def new
     @quotes = @customer.quotes
     @bill = Bill.new
     authorize @bill
   end
-  
+
   def create
     @bill = Bill.new(bill_params)
     @bill.customer = @customer
@@ -45,17 +46,17 @@ class BillsController < ApplicationController
       render :new
     end
   end
-  
+
   def edit
     @bill.services.where(company_id: @company)
     @bill.bill_services.where(bill: @bill)
     authorize @bill
   end
-  
+
   def update
     date = "#{bill_params["date(1i)"]}-#{bill_params["date(2i)"]}-#{bill_params["date(3i)"]}"
     @bill.update(
-      description: (@bill.description != bill_params[:description] ? bill_params[:description] : @bill.description), 
+      description: (@bill.description != bill_params[:description] ? bill_params[:description] : @bill.description),
       ref_bill: (@bill.ref_bill != bill_params[:ref_bill] ? bill_params[:ref_bill] : @bill.ref_bill),
       other: (@bill.other != bill_params[:other] ? bill_params[:other] : @bill.other),
       date: (@bill.date != bill_params[:date] ? bill_params[:date] : @bill.date),
@@ -72,31 +73,31 @@ class BillsController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     @bill.destroy
     authorize @bill
     redirect_to company_customer_path(@company, @customer)
   end
-  
+
   private
-  
+
   def set_bill
     @bill = Bill.find(params[:id])
   end
-  
+
   def set_customer
     @customer = Customer.find(params[:customer_id])
   end
-  
+
   def set_company
     @company = Company.find(params[:company_id])
   end
-  
+
   def bill_params
-    params.require(:bill).permit(:description, :ref_bill, :date, 
+    params.require(:bill).permit(:description, :ref_bill, :date,
                                  :date_asked_payment, :date_start_service, :date_end_service,
-                                 :bill_status, :other, :deposit, 
+                                 :bill_status, :other, :deposit,
                                  :price_duty_free, :price_all_taxes)
   end
 end
